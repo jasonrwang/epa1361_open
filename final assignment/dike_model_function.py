@@ -48,7 +48,7 @@ class DikeNetwork(object):
         self.planning_steps = planning_steps
 
         # Accounting for the discharge reduction due to upstream dike breaches
-        self.sb = False
+        self.sb = True
 
         # Planning window [y], reasonable for it to be a multiple of num_planning_steps
         self.n = 200
@@ -187,7 +187,7 @@ class DikeNetwork(object):
 
                 # Run the simulation:
                 # Run over the discharge wave:
-                for t in range(1, len(time)):
+                for t in range(1, len(time)-1):
                     # Run over each node of the branch:
                     for n in range(0, len(dikelist)):
                         # Select current node:
