@@ -15,11 +15,14 @@ import seaborn as sns
 if __name__ == '__main__':
     ema_logging.log_to_stderr(ema_logging.INFO)
 
-    dike_model = get_model_for_problem_formulation(2)
+    dike_model, planning_steps = get_model_for_problem_formulation(1)
 
+    #reference_values = {'Bmax': 175, 'Brate': 1.5, 'pfail': 0.5,
+    #                    'discount rate': 3.5,
+    #                    'ID flood wave shape': 4}
     reference_values = {'Bmax': 175, 'Brate': 1.5, 'pfail': 0.5,
-                        'discount rate': 3.5,
-                        'ID flood wave shape': 4}
+                        'ID flood wave shape': 4, 'planning steps': 2}
+    reference_values.update({'discount rate {}'.format(n): 3.5 for n in planning_steps})
     scen1 = {}
 
     for key in dike_model.uncertainties:
@@ -35,9 +38,9 @@ if __name__ == '__main__':
 
     convergence_metrics = [EpsilonProgress()]
 
-    espilon = [1e3] * len(dike_model.outcomes)
+    espilon = [10] * len(dike_model.outcomes) #why?
 
-    nfe = 200
+    nfe = 10000
 
 # OPTIMIZATION:
 #    results, convergence = optimize(dike_model, nfe=nfe, searchover='levers',
